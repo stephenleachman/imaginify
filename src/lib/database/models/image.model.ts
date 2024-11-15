@@ -1,25 +1,25 @@
 import { model, models, Schema, } from "mongoose";
 
-export interface Image extends Document {
-  title: string;
-  transformationType: string;
-  publicId: string;
-  secureUrl: string;
-  width?: number;
-  height?: number;
-  config?: Record<string, any>;
-  transformationUrl?: URL;
-  aspectRatio?: string;
-  color?: string;
-  prompt?: string;
-  author: {
-    _id: string;
-    firstName: string;
-    lastName: string;
-  }
-  createdAt?: Date; 
-  updatedAt?: Date; 
-}
+// export interface Image extends Document {
+//   title: string;
+//   transformationType: string;
+//   publicId: string;
+//   secureUrl: string;
+//   width?: number;
+//   height?: number;
+//   config?: Record<string, any>;
+//   transformationUrl?: URL;
+//   aspectRatio?: string;
+//   color?: string;
+//   prompt?: string;
+//   author: {
+//     _id: string;
+//     firstName: string;
+//     lastName: string;
+//   }
+//   createdAt?: Date; 
+//   updatedAt?: Date; 
+// }
 
 
 const ImageSchema = new Schema({
