@@ -5,18 +5,23 @@ import { getUserById } from '@/lib/actions/user.actions';
 import { auth } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
 
-const AddTransformationTypePage = async ({ params }: { params: { type: string } }) => {
-  const { type } = params; // Destructure 'type' here after 'params' is resolved
-  const { userId } = await auth();
+interface PageProps {
+  params: Promise<{ type: string }>;
+}
 
-  if (!userId) redirect('sign-in');
+const AddTransformationTypePage = async ({ params }: PageProps) => {
+  // Await the params before destructuring
+  const { type } = await params;  // Resolves the params Promise
+  
+  const { userId } = await auth();
+  if (!userId) redirect('/sign-in');
 
   const transformation = transformationTypes[type];
-  const user = await getUserById(userId);
-
   if (!transformation) {
-    redirect('/404'); // Handle invalid 'type' gracefully
+    redirect('/404'); // Handle invalid 'type'
   }
+
+  const user = await getUserById(userId);
 
   return (
     <>
