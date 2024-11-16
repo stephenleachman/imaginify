@@ -6,28 +6,34 @@ import { auth } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
 
 
-const AddTransformationTypePage = async ({ params }: SearchParamProps ) => {
-  const { type } = await  params;
-  const transformation = transformationTypes[type]
+// type SearchParamProps = {
+//   params: {
+//     type: keyof typeof transformationTypes; // Ensures 'type' matches a key in transformationTypes
+//   };
+// };
+
+// Now, your component definition:
+const AddTransformationTypePage = async ({ params }: SearchParamProps) => {
+  const resolvedParams = params; // Ensure params are awaited
+  const { type } = resolvedParams;
+  const transformation = transformationTypes[type];
 
   const { userId } = await auth();
 
-  if(!userId) redirect('sign-in');
- 
-  const user = await getUserById(userId);
+  if (!userId) redirect('sign-in');
 
+  const user = await getUserById(userId);
   return (
     <>
-      <Header title={transformation.title} subtitle={transformation.subTitle}/>
-
-      <TransformationForm 
+      <Header title={transformation.title} subtitle={transformation.subTitle} />
+      <TransformationForm
         action="Add"
-        userId={user._id} 
-        type={transformation.type as TransformationTypeKey} 
-        creditBalance={user.creditBalance}      
-        />
+        userId={user._id}
+        type={transformation.type as TransformationTypeKey}
+        creditBalance={user.creditBalance}
+      />
     </>
-  )
-}
+  );
+};
 
-export default AddTransformationTypePage
+export default AddTransformationTypePage;
